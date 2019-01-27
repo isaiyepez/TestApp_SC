@@ -16,7 +16,7 @@ class ProductsListViewController: UIViewController {
     // MARK: - Properties
     var productMC: ProductModelController = ProductModelController()
     
-    var productPage: Int {
+    var page: Int {
         
         return productList.count / 10
     }
@@ -31,63 +31,34 @@ class ProductsListViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-//        let nib = UINib(nibName: ProductCollectionViewCell.identifier, bundle: nil)
-//        collectionView.register(nib, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
         self.collectionView.register(UINib(nibName: "ProductCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
         
         getProducts()
     }
     
     // MARK: - Get products
-    private func getProducts(){
+    private func getProducts() {
         
-//        let completionClosure: (Products?) -> Void = { (productsData) in
-//            if let data = productsData {
-//
-//                self.productList = data.products
-//
-//
-//                DispatchQueue.main.async {
-//
-//                    self.collectionView.reloadData()
-//                }
-//            }
-//        }
-        
-//        let pageDict = ["One" : "1", "Ten" : "10"]
-//        //let pageSize = ["Ten" : "10"]
-//
-//        guard let baseUrl = URL(string: NetworkController.baseUrl) else { return }
-//
-//        let url = NetworkController.url(byAdding: pageDict, to: baseUrl)
-//
-//        print(url)
-        
-//        ProductModelController.getProducts(pageNumber: 1, numberOfProducts: 10, completion: completionClosure)
-        productMC.getProducts(pageNumber: 1, numberOfProducts: 10) { (productsData) in
-            if let data = productsData {
+        productMC.getProducts(pageNumber: page + 1) { (productsData) in
+            guard let data = productsData else { return }
                 
-                self.productList = data.products
-                
-                print(self.productList[0])
-                
+                self.productList.append(contentsOf: data.products)
+                self.totalNumberOfProducts = data.totalProducts
                 DispatchQueue.main.async {
-                    
                     self.collectionView.reloadData()
-                }//End of DispatchQueue.main.async
-            }//End of closure
-        }//End of productMC.getProducts
-    }//End of getProducts
-}//End of ProductsListViewController
+                }            
+        }
+    }
+}
 
 extension ProductsListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        // Pretty sure this is not the best way I could do this...
-        
+
         return productList.count
         
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as! ProductCollectionViewCell
@@ -107,5 +78,14 @@ extension ProductsListViewController: UICollectionViewDataSource, UICollectionVi
         cell.productImage.image = productInfo.productImage
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if indexPath.row == productList.count - 1 && productList.count % 10 == 0 && productList.count < totalNumberOfProducts {
+            
+            getProducts()
+            
+        }
     }
 }

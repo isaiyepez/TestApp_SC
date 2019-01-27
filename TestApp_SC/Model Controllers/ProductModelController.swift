@@ -11,10 +11,10 @@ import UIKit
 class ProductModelController {
     
     private let baseUrl: String = "https://mobile-tha-server.firebaseapp.com"
-    
     private var products:[Product] = [Product]()
+    private let numberOfProducts = 10
     
-    func getProducts(pageNumber: Int, numberOfProducts: Int, completion: @escaping (Products?) -> Void) {
+    func getProducts(pageNumber: Int, completion: @escaping (Products?) -> Void) {
           
         guard let url = URL(string: baseUrl + "/walmartproducts/\(String(pageNumber))/\(String(numberOfProducts))") else { completion(nil); return }
         
@@ -61,8 +61,8 @@ class ProductModelController {
         let getShort: String = product.shortDescription ?? "No short description provided"
         let getLong: String = product.longDescription ?? "No long description provided"
         
-        shortDescription = convertToAttributedString(htmlString: getShort)!
-        longDescription = convertToAttributedString(htmlString: getLong)!
+        shortDescription = transformToAttributedString(htmlString: getShort)!
+        longDescription = transformToAttributedString(htmlString: getLong)!
         
         switch product.inStock {
         case true:
@@ -73,6 +73,10 @@ class ProductModelController {
         
         if let imageUrl = product.imageUrl{
             
+            if let image = ImageCache.shared.getImageFromCache(identifier: imageUrl) {
+                fetchedImage = image
+            } else { }
+            
             getImage(url: baseUrl + "\(imageUrl)") { (image) in
                 
                 guard let img = image else {fetchedImage = UIImage(named: "iconCamera")!; return }
@@ -81,7 +85,7 @@ class ProductModelController {
             
         } else {
             //fetchedImage = getImage(url: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg",
-                                    fetchedImage = UIImage(named: "iconCamera")!
+            fetchedImage = UIImage(named: "iconCamera")!
         }
         
         
@@ -113,23 +117,19 @@ class ProductModelController {
             completion(image)
         }
         task.resume()
-        
     }
     
-    private func convertToAttributedString(htmlString: String) -> NSAttributedString? {
+    private func transformToAttributedString(htmlString: String) -> NSAttributedString? {
         guard let data = htmlString.data(using: .utf8) else { return nil }
         do{
-            let attributed = try NSMutableAttributedString(data: data,
+            let stringAttributed = try NSMutableAttributedString(data: data,
                                                            options: [.documentType: NSAttributedString.DocumentType.html,
                                                                      .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
-            attributed.addAttributes([.font : UIFont.systemFont(ofSize: 18.0)],
-                                     range: NSMakeRange(0, attributed.length))
-            return attributed
+            stringAttributed.addAttributes([.font : UIFont.systemFont(ofSize: 18.0)],
+                                     range: NSMakeRange(0, stringAttributed.length))
+            return stringAttributed
         }catch{
             return NSAttributedString()
         }
     }
-    
-    
-    
 }
