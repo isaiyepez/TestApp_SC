@@ -19,17 +19,17 @@ class ProductCollectionViewCell: UICollectionViewCell {
     static let identifier = "ProductCollectionViewCell"
     
     @IBOutlet weak var productName: UILabel!
-    @IBOutlet weak var price: UILabel!
-    @IBOutlet weak var inStock: UILabel!
     @IBOutlet weak var reviewRating: UILabel!
+    @IBOutlet weak var inStock: UILabel!
+    @IBOutlet weak var price: UILabel!
     @IBOutlet weak var productImage: UIImageView!
     
     private func setUpCell() {
         if let product = product {
             // self. .... (set up all the properties except image)
             productName.text = product.productName
+            reviewRating.text = product.ratingStringFromDouble
             price.text = product.price
-            reviewRating.text = "\(product.ratingStringFromDouble) / 5" 
             inStock.textColor = product.inStockStringFromBool == "In Stock" ? UIColor.blue : UIColor.red
             inStock.text = product.inStockStringFromBool
             

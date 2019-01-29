@@ -40,8 +40,16 @@ struct Product: Decodable {
     }
     
     var ratingStringFromDouble: String {
-        let getreviewRating = reviewRating ?? 0.0
-        return String(getreviewRating)
+        var reviewFormatted: String
+        let getReviewRating = reviewRating ?? 0.0
+        let getReviewCount = reviewCount ?? 0
+        if getReviewRating == 0.0 {
+            reviewFormatted = "No reviews yet"
+        } else {
+            reviewFormatted = "Reviews: " + String(format: "%.1f", getReviewRating) + " / 5" + " (\(getReviewCount))"
+        }
+        
+        return reviewFormatted
     }
     
     var inStockStringFromBool: String {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3D18DF2321FE3B6900EFC90B /* ProductDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D18DF2221FE3B6900EFC90B /* ProductDetailController.swift */; };
-		3D4583BE21F1232100A206BD /* iconCamera.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D4583BD21F1232000A206BD /* iconCamera.png */; };
 		3D53DADC21FD04F700AEE49C /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D53DADB21FD04F700AEE49C /* ImageCache.swift */; };
 		3D73A75B21EF818F0087B91D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73A75A21EF818F0087B91D /* AppDelegate.swift */; };
 		3D73A75D21EF818F0087B91D /* ProductsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73A75C21EF818F0087B91D /* ProductsListViewController.swift */; };
@@ -43,7 +42,6 @@
 
 /* Begin PBXFileReference section */
 		3D18DF2221FE3B6900EFC90B /* ProductDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailController.swift; sourceTree = "<group>"; };
-		3D4583BD21F1232000A206BD /* iconCamera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconCamera.png; sourceTree = "<group>"; };
 		3D53DADB21FD04F700AEE49C /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		3D73A75721EF818F0087B91D /* TestApp_SC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp_SC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D73A75A21EF818F0087B91D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 				3D73A75A21EF818F0087B91D /* AppDelegate.swift */,
 				3D73A78921EF83FC0087B91D /* Model Controllers */,
 				3D73A76121EF81900087B91D /* Assets.xcassets */,
-				3D4583BD21F1232000A206BD /* iconCamera.png */,
 				3D73A76321EF81900087B91D /* LaunchScreen.storyboard */,
 				3D73A76621EF81900087B91D /* Info.plist */,
 				3D73A78C21EF844A0087B91D /* Model */,
@@ -286,7 +283,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D73A76521EF81900087B91D /* LaunchScreen.storyboard in Resources */,
-				3D4583BE21F1232100A206BD /* iconCamera.png in Resources */,
 				3D73A76221EF81900087B91D /* Assets.xcassets in Resources */,
 				3D73A79321EF90370087B91D /* ProductCollectionViewCell.xib in Resources */,
 				3D73A76021EF818F0087B91D /* Main.storyboard in Resources */,
