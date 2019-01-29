@@ -17,13 +17,12 @@ class ProductsListViewController: UIViewController {
     var productMC: ProductModelController = ProductModelController()
     
     var page: Int {
-        
         return productList.count / 10
     }
     
     var productList = [Product]()
-    
     var totalNumberOfProducts = 0
+    var indexCell = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,19 +62,12 @@ extension ProductsListViewController: UICollectionViewDataSource, UICollectionVi
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as! ProductCollectionViewCell
         
-        let productMC = ProductModelController()
+        //let productMC = ProductModelController()
         
         let product = productList[indexPath.row]
+        cell.product = product
         
-        let productInfo = productMC.getProductFormatted(product: product)
-        
-        cell.productName.text = productInfo.name
-        cell.price.text = productInfo.price
-        cell.shortDescription.attributedText = productInfo.shortDesc
-        cell.reviewRating.text = String(productInfo.rating)
-        cell.inStock.text = productInfo.inStock
-        
-        cell.productImage.image = productInfo.productImage
+        //let productInfo = productMC.getProductFormatted(product: product)
         
         return cell
     }
@@ -88,4 +80,20 @@ extension ProductsListViewController: UICollectionViewDataSource, UICollectionVi
             
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        indexCell = indexPath.row
+        performSegue(withIdentifier: "showDetail", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            let productDetailVC = segue.destination as! ProductDetailViewController
+            
+            print(productList[indexCell])
+            
+           productDetailVC.product = productList[indexCell]
+        }
+    }
+    
 }
